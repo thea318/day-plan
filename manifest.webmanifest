@@ -1,0 +1,18 @@
+{
+  "name": "Habit Rewards",
+  "short_name": "Habits",
+  "description": "A pink summer habit tracker with reward jobs and parent approval.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffe8ef",
+  "theme_color": "#f45f8f",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

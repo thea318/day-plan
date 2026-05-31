@@ -349,133 +349,6 @@
         padding: 11px 12px;
       }
 
-      .jobs {
-        margin-top: 16px;
-        background: var(--panel);
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        box-shadow: var(--shadow);
-        padding: 16px;
-      }
-
-      .jobs-header {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 14px;
-        margin-bottom: 14px;
-      }
-
-      .jobs h2 {
-        margin: 0;
-        font-size: clamp(1.45rem, 4vw, 2.2rem);
-        line-height: 1;
-      }
-
-      .jobs-header p {
-        margin: 6px 0 0;
-        color: var(--muted);
-      }
-
-      .money-summary {
-        display: grid;
-        grid-template-columns: minmax(120px, 1fr);
-        gap: 10px;
-        min-width: 180px;
-      }
-
-      .money-card {
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.72);
-        padding: 12px;
-      }
-
-      .money-card strong {
-        display: block;
-        font-size: 1.55rem;
-        line-height: 1;
-      }
-
-      .money-card span {
-        display: block;
-        color: var(--muted);
-        font-size: 0.78rem;
-        font-weight: 800;
-        margin-top: 7px;
-      }
-
-      .job-list {
-        display: grid;
-        gap: 10px;
-      }
-
-      .job {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        gap: 12px;
-        align-items: center;
-        border: 1px solid var(--line);
-        border-radius: 8px;
-        background: rgba(255, 255, 255, 0.84);
-        padding: 14px;
-      }
-
-      .job-title {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        align-items: center;
-      }
-
-      .job-title strong {
-        font-size: 1rem;
-      }
-
-      .job-price {
-        border-radius: 999px;
-        background: var(--pink-soft);
-        color: #9b315f;
-        font-size: 0.78rem;
-        font-weight: 900;
-        padding: 4px 8px;
-      }
-
-      .job p {
-        margin: 5px 0 0;
-        color: var(--muted);
-        font-size: 0.9rem;
-      }
-
-      .job-actions {
-        display: flex;
-        gap: 8px;
-      }
-
-      .job-actions button {
-        border: 1px solid var(--line);
-        border-radius: 7px;
-        background: #fff;
-        color: var(--text);
-        font-weight: 900;
-        padding: 10px 12px;
-        white-space: nowrap;
-      }
-
-      .job-actions .done {
-        background: var(--sun);
-        color: #8c2853;
-      }
-
-      .job-status {
-        display: inline-block;
-        color: var(--muted);
-        font-size: 0.78rem;
-        font-weight: 900;
-        margin-top: 8px;
-        text-transform: uppercase;
-      }
-
       .reward {
         position: fixed;
         inset: 0;
@@ -590,21 +463,6 @@
           width: 100%;
         }
 
-        .jobs-header,
-        .job {
-          align-items: stretch;
-          flex-direction: column;
-          grid-template-columns: 1fr;
-        }
-
-        .money-summary {
-          grid-template-columns: 1fr;
-          min-width: 0;
-        }
-
-        .job-actions {
-          flex-direction: column;
-        }
       }
     </style>
   </head>
@@ -653,21 +511,6 @@
         </aside>
       </main>
 
-      <section class="jobs" aria-labelledby="jobsTitle">
-        <div class="jobs-header">
-          <div>
-            <h2 id="jobsTitle">Reward Jobs</h2>
-            <p>Extra chores for money, separate from everyday habits.</p>
-          </div>
-          <div class="money-summary" aria-label="Reward money summary">
-            <div class="money-card">
-              <strong id="earnedMoney">$0</strong>
-              <span>earned from finished jobs</span>
-            </div>
-          </div>
-        </div>
-        <div class="job-list" id="jobList"></div>
-      </section>
     </div>
 
     <div class="reward" id="reward" role="dialog" aria-modal="true" aria-live="polite">
@@ -681,7 +524,6 @@
 
     <script>
       const storageKey = "tiny-habit-tracker-v3";
-      const jobsStorageKey = "tiny-habit-reward-jobs-v1";
       const today = new Date();
       const todayKey = toDateKey(today);
 
@@ -694,16 +536,7 @@
         { id: createId(), name: "Eat fruit", completions: {} }
       ];
 
-      const defaultJobs = [
-        { id: createId(), name: "Pull weeds for 20 minutes", amount: 5, done: false },
-        { id: createId(), name: "Wash the car", amount: 10, done: false },
-        { id: createId(), name: "Vacuum downstairs", amount: 5, done: false },
-        { id: createId(), name: "Clean bathroom sink and mirror", amount: 7, done: false },
-        { id: createId(), name: "Help bring in groceries", amount: 4, done: false }
-      ];
-
       let habits = loadHabits();
-      let jobs = loadJobs();
 
       const habitForm = document.querySelector("#habitForm");
       const habitInput = document.querySelector("#habitInput");
@@ -720,8 +553,6 @@
       const rewardMessage = document.querySelector("#rewardMessage");
       const rewardClose = document.querySelector("#rewardClose");
       const previewReward = document.querySelector("#previewReward");
-      const jobList = document.querySelector("#jobList");
-      const earnedMoney = document.querySelector("#earnedMoney");
 
       todayLabel.textContent = today.toLocaleDateString(undefined, {
         weekday: "long",
@@ -760,15 +591,6 @@
         }
       }
 
-      function loadJobs() {
-        try {
-          const saved = JSON.parse(localStorage.getItem(jobsStorageKey));
-          return normalizeJobs(Array.isArray(saved) ? saved : defaultJobs);
-        } catch {
-          return defaultJobs;
-        }
-      }
-
       function saveAndRender() {
         try {
           localStorage.setItem(storageKey, JSON.stringify(habits));
@@ -779,67 +601,10 @@
         render();
       }
 
-      function saveJobsAndRender() {
-        try {
-          localStorage.setItem(jobsStorageKey, JSON.stringify(jobs));
-        } catch {
-          // Some mobile browsers block localStorage for pages opened as files.
-        }
-
-        renderJobs();
-      }
-
       function render() {
         renderHabits();
         renderSummary();
         renderWeek();
-        renderJobs();
-      }
-
-      function renderJobs() {
-        jobList.innerHTML = "";
-
-        jobs.forEach((job) => {
-          const row = document.createElement("article");
-          row.className = "job";
-
-          const content = document.createElement("div");
-          const title = document.createElement("div");
-          title.className = "job-title";
-          const name = document.createElement("strong");
-          name.textContent = job.name;
-          const price = document.createElement("span");
-          price.className = "job-price";
-          price.textContent = `$${job.amount}`;
-          title.append(name, price);
-
-          const detail = document.createElement("p");
-          detail.textContent = "Mark this job done when the extra chore is finished.";
-
-          const status = document.createElement("span");
-          status.className = "job-status";
-          status.textContent = getJobStatus(job);
-
-          const actions = document.createElement("div");
-          actions.className = "job-actions";
-
-          const doneButton = document.createElement("button");
-          doneButton.type = "button";
-          doneButton.className = job.done ? "done" : "";
-          doneButton.textContent = job.done ? "Done" : "Mark done";
-          doneButton.addEventListener("click", () => toggleJobDone(job.id));
-
-          content.append(title, detail, status);
-          actions.append(doneButton);
-          row.append(content, actions);
-          jobList.append(row);
-        });
-
-        const earned = jobs
-          .filter((job) => job.done)
-          .reduce((total, job) => total + job.amount, 0);
-
-        earnedMoney.textContent = `$${earned}`;
       }
 
       function renderHabits() {
@@ -972,21 +737,6 @@
         saveAndRender();
       }
 
-      function toggleJobDone(id) {
-        jobs = jobs.map((job) => {
-          if (job.id !== id) return job;
-          const done = !job.done;
-          return { ...job, done };
-        });
-
-        saveJobsAndRender();
-      }
-
-      function getJobStatus(job) {
-        if (job.done) return "finished and earned";
-        return "available job";
-      }
-
       function getTotalCompletions(habit) {
         return Object.values(habit.completions).filter(Boolean).length;
       }
@@ -1025,17 +775,6 @@
             id: habit.id || createId(),
             name: typeof habit.name === "string" && habit.name.trim() ? habit.name : "Untitled habit",
             completions: habit.completions && typeof habit.completions === "object" ? habit.completions : {}
-          }));
-      }
-
-      function normalizeJobs(items) {
-        return items
-          .filter((job) => job && typeof job === "object")
-          .map((job) => ({
-            id: job.id || createId(),
-            name: typeof job.name === "string" && job.name.trim() ? job.name : "Reward job",
-            amount: Number.isFinite(Number(job.amount)) ? Number(job.amount) : 0,
-            done: Boolean(job.done)
           }));
       }
 

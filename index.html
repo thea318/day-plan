@@ -377,19 +377,11 @@
         color: var(--muted);
       }
 
-      .parent-note {
-        display: inline-block;
-        color: #9b315f;
-        font-size: 0.84rem;
-        font-weight: 900;
-        margin-top: 8px;
-      }
-
       .money-summary {
         display: grid;
-        grid-template-columns: repeat(2, minmax(120px, 1fr));
+        grid-template-columns: minmax(120px, 1fr);
         gap: 10px;
-        min-width: 260px;
+        min-width: 180px;
       }
 
       .money-card {
@@ -470,19 +462,9 @@
         white-space: nowrap;
       }
 
-      .job-actions button:disabled {
-        cursor: not-allowed;
-        opacity: 0.55;
-      }
-
       .job-actions .done {
         background: var(--sun);
         color: #8c2853;
-      }
-
-      .job-actions .approved {
-        background: var(--coral);
-        color: #fff;
       }
 
       .job-status {
@@ -676,16 +658,11 @@
           <div>
             <h2 id="jobsTitle">Reward Jobs</h2>
             <p>Extra chores for money, separate from everyday habits.</p>
-            <span class="parent-note">Parent approval needs Dad's code.</span>
           </div>
           <div class="money-summary" aria-label="Reward money summary">
             <div class="money-card">
-              <strong id="pendingMoney">$0</strong>
-              <span>waiting for approval</span>
-            </div>
-            <div class="money-card">
               <strong id="earnedMoney">$0</strong>
-              <span>approved earnings</span>
+              <span>earned from finished jobs</span>
             </div>
           </div>
         </div>
@@ -705,7 +682,6 @@
     <script>
       const storageKey = "tiny-habit-tracker-v3";
       const jobsStorageKey = "tiny-habit-reward-jobs-v1";
-      const parentCode = "4321";
       const today = new Date();
       const todayKey = toDateKey(today);
 
@@ -719,11 +695,11 @@
       ];
 
       const defaultJobs = [
-        { id: createId(), name: "Pull weeds for 20 minutes", amount: 5, done: false, approved: false },
-        { id: createId(), name: "Wash the car", amount: 10, done: false, approved: false },
-        { id: createId(), name: "Vacuum downstairs", amount: 5, done: false, approved: false },
-        { id: createId(), name: "Clean bathroom sink and mirror", amount: 7, done: false, approved: false },
-        { id: createId(), name: "Help bring in groceries", amount: 4, done: false, approved: false }
+        { id: createId(), name: "Pull weeds for 20 minutes", amount: 5, done: false },
+        { id: createId(), name: "Wash the car", amount: 10, done: false },
+        { id: createId(), name: "Vacuum downstairs", amount: 5, done: false },
+        { id: createId(), name: "Clean bathroom sink and mirror", amount: 7, done: false },
+        { id: createId(), name: "Help bring in groceries", amount: 4, done: false }
       ];
 
       let habits = loadHabits();
@@ -745,7 +721,6 @@
       const rewardClose = document.querySelector("#rewardClose");
       const previewReward = document.querySelector("#previewReward");
       const jobList = document.querySelector("#jobList");
-      const pendingMoney = document.querySelector("#pendingMoney");
       const earnedMoney = document.querySelector("#earnedMoney");
 
       todayLabel.textContent = today.toLocaleDateString(undefined, {
@@ -839,7 +814,7 @@
           title.append(name, price);
 
           const detail = document.createElement("p");
-          detail.textContent = "Parent approval turns this job into earned money.";
+          detail.textContent = "Mark this job done when the extra chore is finished.";
 
           const status = document.createElement("span");
           status.className = "job-status";
@@ -854,27 +829,16 @@
           doneButton.textContent = job.done ? "Done" : "Mark done";
           doneButton.addEventListener("click", () => toggleJobDone(job.id));
 
-          const approveButton = document.createElement("button");
-          approveButton.type = "button";
-          approveButton.className = job.approved ? "approved" : "";
-          approveButton.textContent = job.approved ? "Approved" : "Parent approve";
-          approveButton.disabled = !job.done;
-          approveButton.addEventListener("click", () => toggleJobApproved(job.id));
-
           content.append(title, detail, status);
-          actions.append(doneButton, approveButton);
+          actions.append(doneButton);
           row.append(content, actions);
           jobList.append(row);
         });
 
-        const pending = jobs
-          .filter((job) => job.done && !job.approved)
-          .reduce((total, job) => total + job.amount, 0);
         const earned = jobs
-          .filter((job) => job.approved)
+          .filter((job) => job.done)
           .reduce((total, job) => total + job.amount, 0);
 
-        pendingMoney.textContent = `$${pending}`;
         earnedMoney.textContent = `$${earned}`;
       }
 
@@ -1012,31 +976,14 @@
         jobs = jobs.map((job) => {
           if (job.id !== id) return job;
           const done = !job.done;
-          return { ...job, done, approved: done ? job.approved : false };
-        });
-
-        saveJobsAndRender();
-      }
-
-      function toggleJobApproved(id) {
-        const code = prompt("Parent approval code");
-
-        if (code !== parentCode) {
-          if (code !== null) alert("That code did not match.");
-          return;
-        }
-
-        jobs = jobs.map((job) => {
-          if (job.id !== id || !job.done) return job;
-          return { ...job, approved: !job.approved };
+          return { ...job, done };
         });
 
         saveJobsAndRender();
       }
 
       function getJobStatus(job) {
-        if (job.approved) return "approved and earned";
-        if (job.done) return "done, waiting for parent";
+        if (job.done) return "finished and earned";
         return "available job";
       }
 
@@ -1088,8 +1035,7 @@
             id: job.id || createId(),
             name: typeof job.name === "string" && job.name.trim() ? job.name : "Reward job",
             amount: Number.isFinite(Number(job.amount)) ? Number(job.amount) : 0,
-            done: Boolean(job.done),
-            approved: Boolean(job.approved)
+            done: Boolean(job.done)
           }));
       }
 

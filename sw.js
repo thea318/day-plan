@@ -1,4 +1,4 @@
-const cacheName = "habit-rewards-v1";
+const cacheName = "healthy-day-plan-v1";
 const appShell = [
   "./",
   "./index.html",

@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Healthy Habits Home Mockups</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #3f1832;
+        --muted: #7a5268;
+        --pink: #f45f8f;
+        --pink-soft: #ffdce8;
+        --yellow: #ffd45f;
+        --teal: #28b8ae;
+        --blue: #7468d8;
+        --panel: rgba(255, 255, 255, 0.9);
+        --line: rgba(146, 50, 100, 0.18);
+        --shadow: 0 18px 42px rgba(147, 53, 98, 0.14);
+        font-family: "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(180deg, #fff3cf 0%, #ffd6e5 42%, #ffeaf1 100%);
+        color: var(--ink);
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        border-bottom: 1px solid var(--line);
+        background: rgba(255, 248, 251, 0.86);
+        backdrop-filter: blur(14px);
+      }
+
+      .topbar-inner {
+        width: min(1140px, calc(100vw - 30px));
+        min-height: 62px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+      }
+
+      .brand {
+        font-weight: 900;
+        text-decoration: none;
+      }
+
+      .app-link {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: #fff;
+        color: var(--muted);
+        font-size: 0.9rem;
+        font-weight: 900;
+        padding: 8px 12px;
+        text-decoration: none;
+      }
+
+      .wrap {
+        width: min(1140px, calc(100vw - 30px));
+        margin: 0 auto;
+        padding: 28px 0 48px;
+      }
+
+      .intro {
+        margin-bottom: 18px;
+      }
+
+      .intro h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 5vw, 4rem);
+        line-height: 0.98;
+      }
+
+      .intro p {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.45;
+      }
+
+      .mockups {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .mockup {
+        min-height: 430px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        position: relative;
+      }
+
+      .label {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        z-index: 3;
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--ink);
+        font-size: 0.78rem;
+        font-weight: 900;
+        padding: 6px 10px;
+      }
+
+      .screen {
+        min-height: 430px;
+        padding: 58px 22px 22px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .screen h2 {
+        margin: 0;
+        font-size: clamp(1.8rem, 4vw, 3rem);
+        line-height: 0.98;
+        position: relative;
+        z-index: 2;
+      }
+
+      .screen p {
+        max-width: 430px;
+        color: var(--muted);
+        line-height: 1.4;
+        margin: 10px 0 0;
+        position: relative;
+        z-index: 2;
+      }
+
+      .pill-row,
+      .mini-nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 18px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .pill,
+      .mini-nav span {
+        border: 1px solid rgba(146, 50, 100, 0.16);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.82);
+        color: var(--ink);
+        font-weight: 900;
+        padding: 8px 11px;
+      }
+
+      .stat-row {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        margin-top: 20px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .stat {
+        border: 1px solid rgba(146, 50, 100, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.78);
+        padding: 12px;
+      }
+
+      .stat strong {
+        display: block;
+        font-size: 1.8rem;
+        line-height: 1;
+      }
+
+      .stat span {
+        color: var(--muted);
+        display: block;
+        font-size: 0.72rem;
+        font-weight: 900;
+        margin-top: 6px;
+      }
+
+      .habit-preview {
+        display: grid;
+        gap: 8px;
+        margin-top: 18px;
+        max-width: 420px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .habit-line {
+        display: grid;
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid rgba(146, 50, 100, 0.16);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.82);
+        padding: 9px;
+      }
+
+      .tiny-sun {
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        background: var(--yellow);
+        box-shadow: 0 0 0 6px rgba(255, 212, 95, 0.25);
+      }
+
+      .habit-line span {
+        font-weight: 900;
+      }
+
+      .habit-line small {
+        color: var(--muted);
+        font-weight: 900;
+      }
+
+      .sunrise {
+        background:
+          linear-gradient(180deg, #fff7d8 0%, #ffd2e2 46%, #fff 100%);
+      }
+
+      .sunrise .big-sun {
+        width: 160px;
+        height: 160px;
+        border-radius: 999px;
+        background: radial-gradient(circle, #fff7ad 0 35%, #ffd45f 36% 100%);
+        position: absolute;
+        right: 30px;
+        bottom: 42px;
+        box-shadow: 0 0 0 18px rgba(255, 212, 95, 0.24), 0 0 0 38px rgba(255, 138, 179, 0.18);
+        animation: sun-bob 4s ease-in-out infinite;
+      }
+
+      .sunrise .wave {
+        position: absolute;
+        left: -10%;
+        right: -10%;
+        bottom: 0;
+        height: 94px;
+        background:
+          repeating-linear-gradient(135deg, rgba(40, 184, 174, 0.9) 0 18px, rgba(116, 104, 216, 0.72) 18px 36px);
+        clip-path: polygon(0 42%, 8% 52%, 18% 34%, 30% 48%, 42% 32%, 54% 50%, 66% 36%, 80% 53%, 92% 38%, 100% 46%, 100% 100%, 0 100%);
+        animation: wave-slide 7s linear infinite;
+      }
+
+      .sticker {
+        background:
+          linear-gradient(160deg, #ffe1ee 0%, #fff6cf 54%, #d8fff8 100%);
+      }
+
+      .sticker-card {
+        max-width: 360px;
+        margin-top: 20px;
+        border: 2px dashed rgba(244, 95, 143, 0.45);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.74);
+        padding: 16px;
+        position: relative;
+        z-index: 2;
+        transform: rotate(-1deg);
+      }
+
+      .sticker-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 28px);
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .sticker-dot {
+        width: 28px;
+        height: 28px;
+        border-radius: 999px;
+        background: var(--pink-soft);
+        border: 1px solid rgba(146, 50, 100, 0.12);
+      }
+
+      .sticker-dot.done {
+        background: var(--yellow);
+        animation: sticker-pop 2.2s ease-in-out infinite;
+      }
+
+      .sparkle {
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        background: var(--yellow);
+        clip-path: polygon(50% 0, 62% 36%, 100% 50%, 62% 64%, 50% 100%, 38% 64%, 0 50%, 38% 36%);
+        opacity: 0.8;
+        animation: twinkle 1.8s ease-in-out infinite;
+      }
+
+      .sparkle.one {
+        right: 86px;
+        top: 86px;
+      }
+
+      .sparkle.two {
+        right: 36px;
+        bottom: 120px;
+        animation-delay: 0.5s;
+      }
+
+      .florida {
+        background:
+          linear-gradient(180deg, #ffebf3 0%, #fff1b8 48%, #c9fff5 100%);
+      }
+
+      .florida .sun-disc {
+        width: 132px;
+        height: 132px;
+        border-radius: 999px;
+        background: #ffd45f;
+        position: absolute;
+        right: 28px;
+        top: 76px;
+        box-shadow: 0 0 0 16px rgba(255, 212, 95, 0.2);
+        animation: slow-spin 14s linear infinite;
+      }
+
+      .florida .sun-disc::before,
+      .florida .sun-disc::after {
+        content: "";
+        position: absolute;
+        inset: -20px;
+        border-radius: 999px;
+        border: 4px solid rgba(244, 95, 143, 0.22);
+      }
+
+      .florida .palm {
+        width: 108px;
+        height: 168px;
+        position: absolute;
+        right: 70px;
+        bottom: 14px;
+        transform-origin: bottom center;
+        animation: palm-sway 3.8s ease-in-out infinite;
+      }
+
+      .florida .palm::before {
+        content: "";
+        position: absolute;
+        left: 49px;
+        bottom: 0;
+        width: 13px;
+        height: 128px;
+        border-radius: 999px;
+        background: linear-gradient(#cc8a45, #8f5a32);
+        transform: rotate(8deg);
+      }
+
+      .florida .palm::after {
+        content: "";
+        position: absolute;
+        left: 12px;
+        top: 8px;
+        width: 92px;
+        height: 56px;
+        background:
+          radial-gradient(ellipse at 10% 50%, #28b8ae 0 36%, transparent 38%),
+          radial-gradient(ellipse at 36% 14%, #159d9a 0 36%, transparent 38%),
+          radial-gradient(ellipse at 63% 18%, #28b8ae 0 36%, transparent 38%),
+          radial-gradient(ellipse at 86% 50%, #159d9a 0 36%, transparent 38%);
+      }
+
+      .orbit {
+        background:
+          linear-gradient(145deg, #ffe8ef 0%, #fff9d9 58%, #e8f7ff 100%);
+      }
+
+      .suncoast {
+        background:
+          linear-gradient(180deg, #fff5c9 0%, #ffd5e5 42%, #bffbf3 100%);
+      }
+
+      .suncoast .big-sun {
+        width: 156px;
+        height: 156px;
+        border-radius: 999px;
+        background: radial-gradient(circle, #fff7ad 0 35%, #ffd45f 36% 100%);
+        position: absolute;
+        right: 30px;
+        top: 78px;
+        box-shadow: 0 0 0 18px rgba(255, 212, 95, 0.2), 0 0 0 38px rgba(244, 95, 143, 0.14);
+        animation: slow-spin 16s linear infinite;
+      }
+
+      .suncoast .wave {
+        position: absolute;
+        left: -10%;
+        right: -10%;
+        bottom: 0;
+        height: 108px;
+        background:
+          repeating-linear-gradient(135deg, rgba(40, 184, 174, 0.92) 0 18px, rgba(116, 104, 216, 0.7) 18px 36px);
+        clip-path: polygon(0 42%, 8% 52%, 18% 34%, 30% 48%, 42% 32%, 54% 50%, 66% 36%, 80% 53%, 92% 38%, 100% 46%, 100% 100%, 0 100%);
+        animation: wave-slide 7s linear infinite;
+      }
+
+      .suncoast .palm {
+        width: 106px;
+        height: 162px;
+        position: absolute;
+        right: 92px;
+        bottom: 18px;
+        transform-origin: bottom center;
+        animation: palm-sway 3.8s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      .suncoast .palm::before {
+        content: "";
+        position: absolute;
+        left: 49px;
+        bottom: 0;
+        width: 13px;
+        height: 126px;
+        border-radius: 999px;
+        background: linear-gradient(#cc8a45, #8f5a32);
+        transform: rotate(8deg);
+      }
+
+      .suncoast .palm::after {
+        content: "";
+        position: absolute;
+        left: 12px;
+        top: 8px;
+        width: 92px;
+        height: 56px;
+        background:
+          radial-gradient(ellipse at 10% 50%, #28b8ae 0 36%, transparent 38%),
+          radial-gradient(ellipse at 36% 14%, #159d9a 0 36%, transparent 38%),
+          radial-gradient(ellipse at 63% 18%, #28b8ae 0 36%, transparent 38%),
+          radial-gradient(ellipse at 86% 50%, #159d9a 0 36%, transparent 38%);
+      }
+
+      .orbit-wrap {
+        width: 178px;
+        height: 178px;
+        border-radius: 999px;
+        border: 2px dashed rgba(244, 95, 143, 0.28);
+        position: absolute;
+        right: 36px;
+        bottom: 48px;
+        animation: slow-spin 12s linear infinite;
+      }
+
+      .orbit-center {
+        width: 92px;
+        height: 92px;
+        border-radius: 999px;
+        background: #fff;
+        box-shadow: 0 0 0 12px rgba(255, 212, 95, 0.28);
+        display: grid;
+        place-items: center;
+        color: var(--ink);
+        font-size: 2.1rem;
+        font-weight: 900;
+        position: absolute;
+        inset: 42px;
+        animation: reverse-spin 12s linear infinite;
+      }
+
+      .orbit-dot {
+        width: 30px;
+        height: 30px;
+        border-radius: 999px;
+        background: var(--pink);
+        position: absolute;
+        left: 74px;
+        top: -15px;
+      }
+
+      .orbit-dot.two {
+        background: var(--teal);
+        left: auto;
+        right: -15px;
+        top: 74px;
+      }
+
+      .orbit-dot.three {
+        background: var(--yellow);
+        left: 74px;
+        top: auto;
+        bottom: -15px;
+      }
+
+      @keyframes sun-bob {
+        0%, 100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-14px);
+        }
+      }
+
+      @keyframes wave-slide {
+        to {
+          transform: translateX(8%);
+        }
+      }
+
+      @keyframes sticker-pop {
+        0%, 100% {
+          transform: scale(1);
+        }
+
+        50% {
+          transform: scale(1.14);
+        }
+      }
+
+      @keyframes twinkle {
+        0%, 100% {
+          transform: scale(0.7) rotate(0deg);
+          opacity: 0.35;
+        }
+
+        50% {
+          transform: scale(1.15) rotate(24deg);
+          opacity: 1;
+        }
+      }
+
+      @keyframes palm-sway {
+        0%, 100% {
+          transform: rotate(-2deg);
+        }
+
+        50% {
+          transform: rotate(4deg);
+        }
+      }
+
+      @keyframes slow-spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes reverse-spin {
+        to {
+          transform: rotate(-360deg);
+        }
+      }
+
+      @media (max-width: 840px) {
+        .mockups {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 540px) {
+        .topbar-inner {
+          align-items: flex-start;
+          flex-direction: column;
+          padding: 12px 0;
+        }
+
+        .screen {
+          min-height: 480px;
+          padding: 54px 16px 18px;
+        }
+
+        .stat-row {
+          grid-template-columns: 1fr;
+        }
+
+        .sunrise .big-sun,
+        .florida .sun-disc,
+        .suncoast .big-sun,
+        .suncoast .palm,
+        .orbit-wrap {
+          opacity: 0.55;
+          right: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="./index.html">Healthy Habits</a>
+        <a class="app-link" href="./index.html">Back to app</a>
+      </div>
+    </nav>
+
+    <div class="wrap">
+      <section class="intro">
+        <h1>Animated home page mockups</h1>
+        <p>Pick the direction you like best. These are just previews for the home page, so the real habit tracker has not been changed yet.</p>
+      </section>
+
+      <section class="mockups" aria-label="Home page mockups">
+        <article class="mockup">
+          <span class="label">Option A: Sunrise Dashboard</span>
+          <div class="screen sunrise">
+            <h2>Catch the good habits</h2>
+            <p>A warm animated sunrise with moving waves and simple progress cards.</p>
+            <div class="pill-row">
+              <span class="pill">Today</span>
+              <span class="pill">2 of 6 done</span>
+              <span class="pill">Best streak: 7</span>
+            </div>
+            <div class="stat-row">
+              <div class="stat"><strong>2</strong><span>checked</span></div>
+              <div class="stat"><strong>6</strong><span>habits</span></div>
+              <div class="stat"><strong>7</strong><span>day streak</span></div>
+            </div>
+            <div class="big-sun"></div>
+            <div class="wave"></div>
+          </div>
+        </article>
+
+        <article class="mockup">
+          <span class="label">Option B: Sticker Board</span>
+          <div class="screen sticker">
+            <h2>Your sunny checklist</h2>
+            <p>A cute sticker-style homepage where every completed day feels like filling a reward chart.</p>
+            <div class="sticker-card">
+              <strong>This week</strong>
+              <div class="sticker-grid" aria-hidden="true">
+                <span class="sticker-dot done"></span>
+                <span class="sticker-dot done"></span>
+                <span class="sticker-dot done"></span>
+                <span class="sticker-dot done"></span>
+                <span class="sticker-dot"></span>
+                <span class="sticker-dot"></span>
+                <span class="sticker-dot"></span>
+              </div>
+            </div>
+            <div class="habit-preview">
+              <div class="habit-line"><i class="tiny-sun"></i><span>Drink water</span><small>done</small></div>
+              <div class="habit-line"><i class="tiny-sun"></i><span>Go outside</span><small>next</small></div>
+            </div>
+            <span class="sparkle one"></span>
+            <span class="sparkle two"></span>
+          </div>
+        </article>
+
+        <article class="mockup">
+          <span class="label">Option C: Summer Florida</span>
+          <div class="screen florida">
+            <h2>Sunshine habit day</h2>
+            <p>More beachy and summer themed, with a swaying palm, bright sun, and fresh pink colors.</p>
+            <div class="mini-nav">
+              <span>Today</span>
+              <span>Add</span>
+              <span>Streak</span>
+            </div>
+            <div class="habit-preview">
+              <div class="habit-line"><i class="tiny-sun"></i><span>Put on sunscreen</span><small>ready</small></div>
+              <div class="habit-line"><i class="tiny-sun"></i><span>Move 60 minutes</span><small>later</small></div>
+            </div>
+            <div class="sun-disc"></div>
+            <div class="palm"></div>
+          </div>
+        </article>
+
+        <article class="mockup">
+          <span class="label">Option D: Streak Orbit</span>
+          <div class="screen orbit">
+            <h2>Build your streak</h2>
+            <p>A cleaner app-like version with an animated progress orbit as the main home page moment.</p>
+            <div class="stat-row">
+              <div class="stat"><strong>4</strong><span>today</span></div>
+              <div class="stat"><strong>6</strong><span>total</span></div>
+              <div class="stat"><strong>7</strong><span>reward</span></div>
+            </div>
+            <div class="pill-row">
+              <span class="pill">Keep going</span>
+              <span class="pill">Confetti soon</span>
+            </div>
+            <div class="orbit-wrap">
+              <span class="orbit-dot"></span>
+              <span class="orbit-dot two"></span>
+              <span class="orbit-dot three"></span>
+              <div class="orbit-center">4</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="mockup">
+          <span class="label">Option E: Florida Sunrise</span>
+          <div class="screen suncoast">
+            <h2>Catch the sunshine habits</h2>
+            <p>Sunrise dashboard energy mixed with a Florida summer feel: waves, palm, progress, and bright pink.</p>
+            <div class="pill-row">
+              <span class="pill">Today</span>
+              <span class="pill">4 of 6 done</span>
+              <span class="pill">7 day reward</span>
+            </div>
+            <div class="stat-row">
+              <div class="stat"><strong>4</strong><span>checked</span></div>
+              <div class="stat"><strong>6</strong><span>habits</span></div>
+              <div class="stat"><strong>7</strong><span>day streak</span></div>
+            </div>
+            <div class="habit-preview">
+              <div class="habit-line"><i class="tiny-sun"></i><span>Go outside</span><small>done</small></div>
+              <div class="habit-line"><i class="tiny-sun"></i><span>Put on sunscreen</span><small>next</small></div>
+            </div>
+            <div class="big-sun"></div>
+            <div class="palm"></div>
+            <div class="wave"></div>
+          </div>
+        </article>
+      </section>
+    </div>
+  </body>
+</html>

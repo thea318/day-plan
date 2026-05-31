@@ -1,12 +1,12 @@
 {
-  "name": "Healthy Day Plan",
-  "short_name": "Healthy Plan",
-  "description": "A simple daily meal and habit planner with a two-week dairy break reminder.",
+  "name": "Healthy Habits",
+  "short_name": "Habits",
+  "description": "A pink summer habit tracker with reward jobs and parent approval.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f6f3eb",
-  "theme_color": "#2f6f57",
+  "background_color": "#ffe8ef",
+  "theme_color": "#f45f8f",
   "icons": [
     {
       "src": "./icon.svg",

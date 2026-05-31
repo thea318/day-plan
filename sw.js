@@ -1,4 +1,4 @@
-const cacheName = "healthy-day-plan-v1";
+const cacheName = "healthy-habits-v2";
 const appShell = [
   "./",
   "./index.html",
@@ -24,12 +24,12 @@ self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
 
   event.respondWith(
-    caches.match(event.request).then((cached) =>
-      cached || fetch(event.request).then((response) => {
+    fetch(event.request)
+      .then((response) => {
         const copy = response.clone();
         caches.open(cacheName).then((cache) => cache.put(event.request, copy));
         return response;
       })
-    )
+      .catch(() => caches.match(event.request))
   );
 });
